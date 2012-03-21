@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ -z "$GIR_DIR" ]; then
+	echo '$GIR_DIR is not set!'
+	exit
+fi
+
+if [ -f "${GIR_DIR}/.gir.pid" ]; then
+	kill -9 `cat ${GIR_DIR}/.gir.pid`
+	rm ${GIR_DIR}/.gir.pid
+else
+	echo "Don't know which process to kill, ${GIR_DIR}/.gir.pid doesn't exist!"
+fi
+#killall gir-daemon
