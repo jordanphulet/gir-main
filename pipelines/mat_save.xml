@@ -12,6 +12,7 @@
 
 		<param_set plugin_alias="matlab">
 			<param name="matlab_script" value="mat_save" />
+			<param name="save_dir" value="/v/raid5/usr/jhulet/gir-stable/export" />
 		</param_set>
 
 	</config>

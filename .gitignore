@@ -1,2 +1,6 @@
 lib/
 sample_meas.dat
+*.mexa64
+*.o
+*.so
+bin/gir-daemon

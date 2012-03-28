@@ -28,28 +28,29 @@ rsync -va --exclude .git $GIR_SRC/matlab_scripts/* $1/matlab_scripts
 rsync -va $GIR_SRC/sample_meas.dat $1
 
 # create config 
+export GIR_CREATE_CONFIG=1;
 if [ -f "$1/config.xml" ]; then
-	echo -n "config already exists, overwrite [y|N] ?"
+	echo -n "config already exists, overwrite [y|N]? "
 	read -n 1 CHOICE
 	if [ "$CHOICE" != "y" ]; then
-		echo "aborting..."
-		exit
+		export GIR_CREATE_CONFIG=0;
 	fi
+	echo
 fi
 
-export ABS_INPUT_PATH=`readlink -f $1`
-
-cat <<ENDL > $1/config.xml
+if [ "$GIR_CREATE_CONFIG" == 1 ]; then
+	export ABS_INPUT_PATH=`readlink -f $1`
+	cat <<ENDL > $1/config.xml
 <gir_xml>
 	<config>
-
+	
 		<param_set>
 			<param name="port" value="9997" />
 			<param name="log_path" value="$ABS_INPUT_PATH/gir.log" />
 			<param name="plugin_dir" value="$ABS_INPUT_PATH/plugins/" />
 			<param name="pipeline_dir" value="$ABS_INPUT_PATH/pipelines/" />
 		</param_set>
-
+	
 		<param_set plugin_id="Plugin_Matlab">
 			<param name="script_dir" value="$ABS_INPUT_PATH/matlab_scripts/" />
 		</param_set>
@@ -57,3 +58,4 @@ cat <<ENDL > $1/config.xml
 	</config>
 </gir_xml>
 ENDL
+fi
