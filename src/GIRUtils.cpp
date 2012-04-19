@@ -17,7 +17,7 @@ bool GIRUtils::IsDir( const char* path )
 
 bool GIRUtils::FileIsReadable( const char* path )
 {
-	std::fstream file_stream( path );
+	std::ifstream file_stream( path );
 	bool readable = file_stream.good();
 	file_stream.close();
 	return readable;

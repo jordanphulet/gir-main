@@ -73,6 +73,10 @@ idl: src/idl/idliceclient.so
 src/idl/idliceclient.so: src/idl/RecvDat.cpp src/idl/IDLData.o ${RECV_OBJS}
 	${CXX} -shared -fPIC -Isrc -Isrc/idl -I${IDL_PATH}/external/include ${RECV_OBJS} src/idl/IDLData.o -o $@ $<
 
+# make zip file
+zip:
+	zip -r gir-main.zip * -x .git -x *.o -x *.so -x sample_meas.dat
+
 # clean
 clean:
 	rm -f bin/{gir-daemon,*.${MEX_EXT}} 
