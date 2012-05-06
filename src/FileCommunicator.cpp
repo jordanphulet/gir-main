@@ -1,5 +1,6 @@
 #include "FileCommunicator.h"
 #include "GIRLogger.h"
+#include "MRIDataComm.h"
 #include <cstdio>
 #include <stdio.h>
 
@@ -110,4 +111,32 @@ void FileCommunicator::CloseInput()
 		fclose( input );
 		input = 0;
 	}
+}
+
+bool FileCommunicator::Write( MRIData& mri_data, std::string file_path )
+{
+	FileCommunicator communicator;
+	if( !communicator.OpenOutput( file_path.c_str() ) )
+	{
+		GIRLogger::LogError( "FileCommunicator::Write ->  couldn't open input file %s!\n", file_path.c_str() );
+		return false;
+	}
+	MRIReconRequest request;
+	communicator.SendReconRequest( request );
+	communicator.SendData( mri_data );
+	return true;
+}
+
+bool FileCommunicator::Read( MRIData& mri_data, std::string file_path )
+{
+	FileCommunicator communicator;
+	if( !communicator.OpenInput( file_path.c_str() ) )
+	{
+		GIRLogger::LogError( "FileCommunicator::Write ->  couldn't open input file %s!\n", file_path.c_str() );
+		return false;
+	}
+	MRIReconRequest request;
+	communicator.ReceiveReconRequest( request );
+	communicator.ReceiveData( mri_data );
+	return true;
 }
