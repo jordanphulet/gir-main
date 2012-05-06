@@ -1,6 +1,7 @@
 #include <MRIDataSplitter.h>
 #include <MRIData.h>
 #include <GIRLogger.h>
+#include <cstring>
 
 bool MRIDataSplitter::SplitRepetitions( MRIData& full_data, MRIData& sub_data, int full_start_rep, int num_reps )
 {
