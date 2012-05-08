@@ -21,7 +21,8 @@ IDL_INC := -I${IDL_PATH}/external/include
 # objs
 TINYXML_OBJS := src/tinyxml/tinystr.o src/tinyxml/tinyxml.o src/tinyxml/tinyxmlerror.o src/tinyxml/tinyxmlparser.o
 BASE_OBJS := src/SiemensTool.o src/GIRUtils.o src/GIRLogger.o src/MRIData.o src/FileCommunicator.o src/TCPCommunicator.o src/DataCommunicator.o src/Serializable.o src/MRIDataComm.o src/RadialGridder.o src/GIRConfig.o src/MRIDataSplitter.o
-SERVER_OBJS := src/PMUData.o src/DataSorter.o ${TINYXML_OBJS} src/GIRXML.o src/GIRServer.o src/ReconPipeline.o src/ReconPlugin.o src/MRIDataTool.o src/FilterTool.o src/matlab/MexData.o
+LIB_OBJS := src/SiemensTool.o src/GIRUtils.o src/GIRLogger.o src/MRIData.o src/FileCommunicator.o src/TCPCommunicator.o src/DataCommunicator.o src/Serializable.o src/MRIDataComm.o src/RadialGridder.o src/GIRConfig.o src/MRIDataSplitter.o src/FilterTool.o src/MRIDataTool.o
+SERVER_OBJS := src/PMUData.o src/DataSorter.o ${TINYXML_OBJS} src/GIRXML.o src/GIRServer.o src/ReconPipeline.o src/ReconPlugin.o src/MRIDataTool.o src/matlab/MexData.o src/FilterTool.o
 ALL_OBJS = ${BASE_OBJS} ${SERVER_OBJS}
 
 all: daemon plugins mex libs
@@ -33,8 +34,8 @@ all: daemon plugins mex libs
 # libs
 libs: lib/libgir-base.so
 
-lib/libgir-base.so: ${BASE_OBJS}
-	${CXX} ${CXX_FLAGS} ${MATLAB_INC} -shared -fPIC -o $@ ${BASE_OBJS}
+lib/libgir-base.so: ${LIB_OBJS}
+	${CXX} ${CXX_FLAGS} ${MATLAB_INC} -shared -fPIC -o $@ ${LIB_OBJS}
 
 # daemon
 daemon: bin/gir-daemon
