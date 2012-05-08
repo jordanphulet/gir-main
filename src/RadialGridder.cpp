@@ -89,8 +89,8 @@ bool RadialGridder::Grid( const MRIData& radial_data, MRIData& cart_data, Interp
 			}
 			else if( view_ordering == VO_GOLDEN_RATIO )
 			{
-				//int view_index = (repetition+repetition_offset)*radial_data.Size().Line+ view;
-				int view_index = (repetition+phase)*radial_data.Size().Line+ view;
+				int view_index = (repetition+repetition_offset)*radial_data.Size().Line+ view;
+				//int view_index = (repetition+phase)*radial_data.Size().Line+ view;
 				theta = view_index*golden_angle;
 				theta = fmod( theta, M_PI );
 			}
