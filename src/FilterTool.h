@@ -28,6 +28,8 @@ class FilterTool {
 		static void FFTShift( MRIData& dest, bool reverse = false );
 		static void FFTShift( MRIData& dest, bool shift_lr, bool shift_ud, bool reverse = false );
 
+		static void RemoveOS( MRIData& data );
+
 		static pthread_mutex_t Mutex;
 		static void InitMutex();
 		static void DestroyMutex();

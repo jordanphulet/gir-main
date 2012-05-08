@@ -479,3 +479,41 @@ void FilterTool::InitMutex() {
 void FilterTool::DestroyMutex() {
 	pthread_mutex_destroy( &Mutex );
 }
+
+void FilterTool::RemoveOS( MRIData& full_data )
+{
+	int sub_col = (int)floor( full_data.Size().Column / 2.0 );
+	int col_margin = (int)floor( sub_col / 2.0 );
+	int sub_line = (int)floor( full_data.Size().Line / 2.0 );
+	int line_margin = (int)floor( sub_line / 2.0 );
+
+	// created smaller full_data
+	MRIDimensions sub_size = full_data.Size();
+	sub_size.Column = sub_col;
+	sub_size.Line = sub_line;
+	MRIData sub_data = MRIData( sub_size, full_data.IsComplex() );
+
+	// copy full_data
+	int copy_size = sub_col * sizeof( float );
+	if( full_data.IsComplex() )
+		copy_size *= 2;
+
+	for( int line = 0; line < sub_data.Size().Line; line++ )
+	for( int channel = 0; channel < sub_data.Size().Line; channel++ )
+	for( int set = 0; set < sub_data.Size().Set; set++ )
+	for( int phase = 0; phase < sub_data.Size().Phase; phase++ )
+	for( int slice = 0; slice < sub_data.Size().Phase; slice++ )
+	for( int echo = 0; echo < sub_data.Size().Echo; echo++ )
+	for( int repetition = 0; repetition < sub_data.Size().Repetition; repetition++ )
+	for( int segment = 0; segment < sub_data.Size().Segment; segment++ )
+	for( int partition = 0; partition < sub_data.Size().Partition; partition++ )
+	for( int average = 0; average < sub_data.Size().Average; average++ )
+	{
+		float* full_index = full_data.GetDataIndex( col_margin, line + line_margin, channel, set, phase, slice, echo, repetition, segment, partition, average );
+		float* sub_index = sub_data.GetDataIndex( 0, line, channel, set, phase, slice, echo, repetition, segment, partition, average );
+		memcpy( sub_index, full_index, copy_size );
+	}
+
+
+	full_data = sub_data;
+}
