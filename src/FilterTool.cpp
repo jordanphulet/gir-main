@@ -499,10 +499,10 @@ void FilterTool::RemoveOS( MRIData& full_data )
 		copy_size *= 2;
 
 	for( int line = 0; line < sub_data.Size().Line; line++ )
-	for( int channel = 0; channel < sub_data.Size().Line; channel++ )
+	for( int channel = 0; channel < sub_data.Size().Channel; channel++ )
 	for( int set = 0; set < sub_data.Size().Set; set++ )
 	for( int phase = 0; phase < sub_data.Size().Phase; phase++ )
-	for( int slice = 0; slice < sub_data.Size().Phase; slice++ )
+	for( int slice = 0; slice < sub_data.Size().Slice; slice++ )
 	for( int echo = 0; echo < sub_data.Size().Echo; echo++ )
 	for( int repetition = 0; repetition < sub_data.Size().Repetition; repetition++ )
 	for( int segment = 0; segment < sub_data.Size().Segment; segment++ )
